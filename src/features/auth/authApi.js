@@ -6,7 +6,6 @@ export const loginApi = (credentials) =>
   request("POST", endpoints.auth.login, credentials);
 
 export const registerApi = (data) =>
-  request("POST", endpoints.auth.register, data);
+  request("POST", endpoints.auth.register, data); // data includes role now ✅
 
-export const profileApi = () =>
-  request("GET", endpoints.auth.profile);
+export const profileApi = () => request("GET", endpoints.auth.profile);

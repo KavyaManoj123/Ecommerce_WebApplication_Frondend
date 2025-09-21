@@ -9,6 +9,7 @@ export default function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+   const [role, setRole] = useState("customer"); 
   const dispatch = useAppDispatch();
   const { showToast } = useToast();
   const { loading, error, user } = useAppSelector(state => state.auth);
@@ -17,7 +18,7 @@ export default function Login() {
   const handleSubmit = e => {
     e.preventDefault();
     if (isSignup) {
-      dispatch(registerUser({ name, email, password }));
+      dispatch(registerUser({ name, email, password, role })); 
     } else {
       dispatch(loginUser({ email, password }));
     }
@@ -81,15 +82,29 @@ export default function Login() {
             </p>
 
             {/* Signup needs Name field */}
-            {isSignup && (
-              <input
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="Full Name"
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-                required
-              />
+             {isSignup && (
+              <>
+                {/* Full Name */}
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Full Name"
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  required
+                />
+
+                {/* Role Dropdown 👇 */}
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  required
+                >
+                  <option value="customer">Customer</option>
+                  <option value="seller">Seller</option>
+                </select>
+              </>
             )}
 
             {/* Email */}

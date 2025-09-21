@@ -1,27 +1,47 @@
-// src/pages/HomePage.jsx
-import { useEffect } from "react";
-import { useAppSelector } from "../app/hooks";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import HeroBanner from "../components/home/HeroBanner";
-import Categories from "../components/home/Categories";
-import Header from "../components/layouts/Header";
+import HeroBanner from '../components/home/HeroBanner';
+import Categories from '../components/home/Categories';
+import Header from '../components/layouts/Header';
+import Sidebar from '../components/layouts/Sidebar';
 
 export default function HomePage() {
-  const { user } = useAppSelector((state) => state.auth);
+  const { user } = useSelector(state => state.auth);
   const navigate = useNavigate();
 
-  // redirect if not logged in
   useEffect(() => {
-    if (!user) navigate("/");
+    if (!user) navigate('/');
   }, [user, navigate]);
 
   return (
-    <div className="h-screen w-screen overflow-hidden flex flex-col bg-gray-50">
+    <div className="h-screen w-screen bg-gray-50">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center overflow-hidden">
+      <Sidebar />
+
+      <main className="pt-14 pl-60 pr-4 h-full overflow-y-auto">
+        {/* Banner */}
         <HeroBanner />
-        <Categories />
+
+        {/* Shop by Category */}
+        <section className="my-6">
+          <h2 className="text-lg font-bold mb-4 text-orange-600">
+            Shop by Category
+          </h2>
+          <Categories />
+        </section>
+
+        {/* Featured Products */}
+        <section className="my-6">
+          <h2 className="text-lg font-bold mb-4 text-orange-600">
+            Featured Products
+          </h2>
+          <div className="grid grid-cols-4 gap-4">
+            {/* map your products here */}
+            <div className="bg-white p-4 shadow rounded">Product</div>
+          </div>
+        </section>
       </main>
     </div>
   );
